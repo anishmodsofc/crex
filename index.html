@@ -1,0 +1,2350 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#070609">
+    <meta name="referrer" content="no-referrer">
+    <title>ANISH CREXXX — High-Speed Client Portal</title>
+    <link rel="icon" type="image/png" href="assets/define-aura-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <style>
+        :root {
+            --bg: #07070a;
+            --panel: rgba(14, 11, 16, 0.92);
+            --panel-card: rgba(18, 13, 20, 0.88);
+            --panel-border: rgba(255, 36, 66, 0.28);
+            --panel-border-bright: rgba(255, 36, 66, 0.55);
+            --crimson: #ff2442;
+            --crimson-light: #ff4d66;
+            --crimson-glow: rgba(255, 36, 66, 0.45);
+            --crimson-dark: #800f1f;
+            --neon-pink: #ff135b;
+            --cyan-accent: #06b6d4;
+            --green-ok: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.45);
+            --text-main: #fef2f2;
+            --text-muted: #8e7a85;
+            --text-dim: #5c4a54;
+            --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', Consolas, monospace;
+            --font-cyber: 'Rajdhani', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 50% 18%, rgba(255, 36, 66, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 85% 80%, rgba(185, 28, 28, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 15% 65%, rgba(255, 19, 91, 0.06) 0%, transparent 45%),
+                linear-gradient(rgba(255, 36, 66, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 36, 66, 0.025) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+        }
+
+        /* Ambient Cyber Scanlines */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.28) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.45;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        button, input { font-family: inherit; }
+
+        .shell {
+            width: min(100% - 24px, 780px);
+            margin: 0 auto;
+            padding: 20px 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========================================================
+           HEADER BANNER SECTION (Matches Uploaded Screenshot)
+           ======================================================== */
+        .header-banner {
+            background: radial-gradient(circle at 80% 30%, rgba(255, 36, 66, 0.22) 0%, rgba(14, 10, 16, 0.95) 60%), #0c080d;
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            padding: 24px 26px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 165px;
+            box-shadow: 
+                0 18px 45px rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(255, 36, 66, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .header-banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 5%, var(--crimson) 30%, var(--neon-pink) 65%, transparent 95%);
+            box-shadow: 0 0 14px var(--crimson);
+        }
+
+        .header-left {
+            position: relative;
+            z-index: 3;
+            max-width: 58%;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .welcome-tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.22em;
+            color: #d1d5db;
+            text-transform: uppercase;
+        }
+        .welcome-tag span {
+            color: var(--crimson);
+        }
+
+        .brand-hero-title {
+            font-family: var(--font-cyber);
+            font-size: clamp(26px, 4.5vw, 38px);
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            line-height: 1.05;
+            color: #ffffff;
+            text-transform: uppercase;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
+        }
+        .brand-hero-title .aura-text {
+            color: var(--crimson);
+            background: linear-gradient(135deg, #ff3355 0%, #ff135b 50%, #ff5277 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 18px rgba(255, 36, 66, 0.65));
+        }
+
+        .hero-tags {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.24em;
+            color: #a1919a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 4px 0 10px;
+        }
+        .hero-tags span {
+            color: var(--crimson);
+            opacity: 0.85;
+        }
+
+        .whatsapp-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            width: fit-content;
+            padding: 9px 18px;
+            background: rgba(22, 12, 17, 0.85);
+            border: 1px solid rgba(255, 36, 66, 0.45);
+            border-radius: 24px;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 36, 66, 0.15);
+        }
+        .whatsapp-pill:hover {
+            border-color: var(--crimson);
+            background: rgba(255, 36, 66, 0.2);
+            box-shadow: 0 0 22px rgba(255, 36, 66, 0.5);
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+        .whatsapp-pill svg {
+            flex-shrink: 0;
+            color: var(--crimson-light);
+        }
+
+        .header-right {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+            min-width: 220px;
+        }
+
+        .dragon-art {
+            position: absolute;
+            right: 90px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 175px;
+            height: 175px;
+            pointer-events: none;
+            opacity: 0.95;
+            filter: drop-shadow(0 0 25px rgba(255, 36, 66, 0.7));
+            mask-image: radial-gradient(circle at 55% 50%, black 45%, transparent 78%);
+            -webkit-mask-image: radial-gradient(circle at 55% 50%, black 45%, transparent 78%);
+            object-fit: cover;
+        }
+
+        .priority-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            line-height: 1.45;
+            color: #d1c5cc;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 3;
+            margin-left: auto;
+        }
+        .priority-underline {
+            width: 44px;
+            height: 3.5px;
+            background: var(--crimson);
+            box-shadow: 0 0 10px var(--crimson);
+            border-radius: 2px;
+            margin-top: 6px;
+        }
+
+        /* ========================================================
+           TAB NAVIGATION BAR
+           ======================================================== */
+        .tab-nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            background: rgba(14, 10, 15, 0.85);
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 36, 66, 0.2);
+            backdrop-filter: blur(12px);
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 36, 66, 0.08);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(255, 36, 66, 0.25) 0%, rgba(18, 12, 18, 0.95) 100%);
+            border-color: rgba(255, 36, 66, 0.55);
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(255, 36, 66, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-pill-badge {
+            font-size: 9.5px;
+            padding: 2px 7px;
+            border-radius: 10px;
+            background: rgba(255, 36, 66, 0.18);
+            border: 1px solid rgba(255, 36, 66, 0.4);
+            color: var(--crimson-light);
+        }
+        .tab-pill-badge.active-green {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: rgba(16, 185, 129, 0.4);
+            color: #34d399;
+        }
+
+        /* ========================================================
+           TAB CONTENT SECTIONS
+           ======================================================== */
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .tab-content.active {
+            display: flex;
+            animation: fadeInTab 0.28s ease;
+        }
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========================================================
+           TWO-COLUMN GRID (Tab 1: Access Key & Status)
+           ======================================================== */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.55fr 1fr;
+            gap: 16px;
+        }
+
+        /* Access Key Card */
+        .access-card {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            border-radius: 18px;
+            padding: 22px 22px 20px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .access-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .access-card-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        .key-title-icon {
+            color: var(--crimson);
+            display: flex;
+            align-items: center;
+        }
+
+        .autosave-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 11px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.38);
+            border-radius: 16px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            color: #34d399;
+            text-transform: uppercase;
+        }
+        .dot-green {
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulseG 2s infinite ease-in-out;
+        }
+        @keyframes pulseG {
+            0%, 100% { opacity: 0.7; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Input Container */
+        .key-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(9, 6, 10, 0.94);
+            border: 1px solid rgba(255, 36, 66, 0.32);
+            border-radius: 12px;
+            padding: 6px 14px;
+            margin-bottom: 12px;
+            transition: all 0.25s ease;
+        }
+        .key-input-container:focus-within {
+            border-color: var(--crimson);
+            box-shadow: 0 0 20px rgba(255, 36, 66, 0.35);
+            background: rgba(14, 8, 14, 0.98);
+        }
+
+        .key-input-field {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 13.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            padding: 9px 0;
+        }
+        .key-input-field::placeholder {
+            color: #5d4852;
+            font-weight: 500;
+        }
+
+        .eye-toggle-btn {
+            background: transparent;
+            border: none;
+            color: #7b6571;
+            cursor: pointer;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.15s;
+        }
+        .eye-toggle-btn:hover {
+            color: #ffffff;
+        }
+
+        /* Action Buttons Row */
+        .input-actions-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .key-count-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(18, 12, 18, 0.9);
+            border: 1px solid rgba(255, 36, 66, 0.22);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .key-count-pill svg {
+            color: var(--crimson);
+        }
+
+        .action-buttons-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            background: rgba(18, 12, 18, 0.9);
+            border: 1px solid rgba(255, 36, 66, 0.3);
+            border-radius: 8px;
+            color: #e2d9dc;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .card-btn-action:hover {
+            border-color: var(--crimson);
+            background: rgba(255, 36, 66, 0.15);
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(255, 36, 66, 0.25);
+        }
+
+        /* Big Glowing Authenticate Button */
+        .auth-cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px 18px;
+            background: linear-gradient(135deg, #ff1a40 0%, #e60039 50%, #b8002e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #ffffff;
+            font-family: var(--font-cyber);
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 0 28px rgba(255, 26, 64, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-cta-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+            transition: 0.5s;
+        }
+        .auth-cta-btn:hover::before {
+            left: 100%;
+        }
+        .auth-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 45px rgba(255, 26, 64, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            filter: brightness(1.1);
+        }
+        .auth-cta-btn:disabled {
+            opacity: 0.65;
+            cursor: wait;
+            transform: none;
+        }
+
+        /* 3-Badge Spec Grid */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .spec-item {
+            background: rgba(14, 9, 14, 0.85);
+            border: 1px solid rgba(255, 36, 66, 0.16);
+            border-radius: 10px;
+            padding: 10px 6px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .spec-label {
+            font-family: var(--font-mono);
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .spec-value {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            color: #fee2e2;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            word-break: break-word;
+        }
+        .spec-val-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--cyan-accent);
+            box-shadow: 0 0 8px var(--cyan-accent);
+        }
+        .spec-val-dot.green {
+            background: var(--green-ok);
+            box-shadow: 0 0 8px var(--green-ok);
+        }
+        .spec-val-dot.amber {
+            background: #f59e0b;
+            box-shadow: 0 0 8px #f59e0b;
+        }
+
+        /* Post-Login Expiration Card (Prominent Highlight) */
+        .expiry-details-card {
+            display: none;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(14, 10, 16, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 14px;
+            padding: 16px 18px;
+            margin-bottom: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+        .expiry-details-card.show {
+            display: block;
+        }
+        .expiry-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .expiry-title-tag {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            color: #34d399;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .expiry-date-display {
+            font-family: var(--font-mono);
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.04em;
+            margin: 4px 0 6px;
+        }
+        .expiry-time-left {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: #a7f3d0;
+            letter-spacing: 0.08em;
+        }
+        .switch-to-servers-btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 36, 66, 0.15);
+            border: 1px solid rgba(255, 36, 66, 0.45);
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        /* Cloudflare Turnstile Human Verification Box */
+        .turnstile-box-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            background: rgba(14, 9, 14, 0.85);
+            border: 1px solid rgba(255, 36, 66, 0.22);
+            border-radius: 12px;
+            gap: 8px;
+        }
+        .turnstile-badge-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .turnstile-badge-title svg {
+            color: var(--crimson);
+        }
+        .cf-turnstile {
+            min-height: 65px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Status Banner Box */
+        .status-box {
+            display: none;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+        .status-box.show { display: block; }
+        .status-box.error {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.45);
+            color: #fca5a5;
+        }
+        .status-box.ok {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            color: #6ee7b7;
+        }
+
+        /* ========================================================
+           RIGHT COLUMN: SYSTEM STATUS CARD (Matches Screenshot)
+           ======================================================== */
+        .system-status-card {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            border-radius: 18px;
+            padding: 22px 18px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Glowing Concentric Shield Emblem */
+        .shield-radar-wrap {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 4px 0 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .radar-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 36, 66, 0.35);
+            pointer-events: none;
+        }
+        .radar-ring.ring-1 {
+            width: 96px;
+            height: 96px;
+            border-color: rgba(255, 36, 66, 0.25);
+            animation: radarPulse 3s infinite ease-in-out;
+        }
+        .radar-ring.ring-2 {
+            width: 82px;
+            height: 82px;
+            border-color: rgba(255, 36, 66, 0.5);
+            box-shadow: 0 0 15px rgba(255, 36, 66, 0.35);
+        }
+        .radar-ring.ring-3 {
+            width: 66px;
+            height: 66px;
+            border-color: rgba(255, 36, 66, 0.8);
+            background: rgba(25, 10, 16, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 15px rgba(255, 36, 66, 0.5), 0 0 20px rgba(255, 36, 66, 0.4);
+        }
+        @keyframes radarPulse {
+            0%, 100% { transform: scale(0.95); opacity: 0.6; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .status-header-title {
+            font-family: var(--font-cyber);
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .ready-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 14px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: 20px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            color: #34d399;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        /* 4-Item Check List */
+        .status-checklist {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: #d1d5db;
+        }
+        .check-left {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .check-badge-ok {
+            color: #34d399;
+            font-weight: 800;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+        }
+
+        /* Heartbeat / ECG Wave Graph */
+        .pulse-wave-box {
+            width: 100%;
+            padding: 4px 0;
+            margin: 4px 0 6px;
+        }
+        .pulse-svg {
+            width: 100%;
+            height: 38px;
+            overflow: visible;
+        }
+        .pulse-path {
+            stroke: var(--crimson);
+            stroke-width: 2;
+            fill: none;
+            filter: drop-shadow(0 0 6px var(--crimson));
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawPulse 3.5s linear infinite;
+        }
+        @keyframes drawPulse {
+            0% { stroke-dashoffset: 400; }
+            50% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -400; }
+        }
+
+        .system-brand-tag {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            color: #8c7682;
+            text-transform: uppercase;
+        }
+        .system-active-sub {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            color: var(--crimson);
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* ========================================================
+           TAB 2: SELECT SERVER PANEL (Server List & Happ Launch)
+           ======================================================== */
+        .servers-view-container {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            border-radius: 18px;
+            padding: 24px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65);
+        }
+
+        .servers-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 36, 66, 0.18);
+        }
+
+        .servers-header-title {
+            font-family: var(--font-cyber);
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            color: #ffffff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Active License Header Badge on Server Tab */
+        .server-tab-license-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: rgba(18, 12, 18, 0.9);
+            border: 1px solid rgba(255, 36, 66, 0.25);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+        }
+
+        .banner-license-info {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .banner-license-key {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 800;
+            color: #fee2e2;
+            letter-spacing: 0.08em;
+        }
+        .banner-license-expiry {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: #34d399;
+            letter-spacing: 0.05em;
+        }
+
+        /* Server Category Filter Bar (Colider HS vs Drag HS Separation) */
+        .server-category-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            background: rgba(14, 10, 14, 0.7);
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 36, 66, 0.18);
+        }
+        .server-cat-pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 12px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .server-cat-pill:hover {
+            color: #ffffff;
+            background: rgba(255, 36, 66, 0.08);
+        }
+        .server-cat-pill.active {
+            background: rgba(255, 36, 66, 0.18);
+            border-color: rgba(255, 36, 66, 0.5);
+            color: #ffffff;
+            box-shadow: 0 0 14px rgba(255, 36, 66, 0.25);
+        }
+        .cat-pill-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1px 6px;
+            font-size: 9.5px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        .server-cat-pill.active .cat-pill-count {
+            background: var(--crimson);
+            color: #ffffff;
+        }
+
+        /* Server Group Section Headers */
+        .server-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: linear-gradient(90deg, rgba(255, 36, 66, 0.15) 0%, rgba(20, 10, 16, 0.4) 100%);
+            border-left: 3px solid var(--crimson);
+            border-radius: 6px;
+            margin-top: 6px;
+            margin-bottom: 2px;
+        }
+        .server-section-header.drag-section {
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.15) 0%, rgba(20, 15, 10, 0.4) 100%);
+            border-left-color: #f59e0b;
+        }
+        .section-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-header-title {
+            font-family: var(--font-cyber);
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        .section-header-badge {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: rgba(255, 36, 66, 0.25);
+            border: 1px solid rgba(255, 36, 66, 0.4);
+            color: var(--crimson-light);
+        }
+        .server-section-header.drag-section .section-header-badge {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+        }
+        .section-header-desc {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        /* Type Badges on Server Cards */
+        .server-tag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .server-tag-colider {
+            background: rgba(255, 36, 66, 0.2);
+            border: 1px solid rgba(255, 36, 66, 0.4);
+            color: #ff6b81;
+        }
+        .server-tag-drag {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+        }
+
+        .servers-grid-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .server-item-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: rgba(18, 12, 18, 0.92);
+            border: 1px solid rgba(255, 36, 66, 0.24);
+            border-radius: 12px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        .server-item-card:hover {
+            border-color: var(--crimson);
+            background: rgba(255, 36, 66, 0.14);
+            transform: translateX(4px);
+            box-shadow: 0 0 22px rgba(255, 36, 66, 0.28);
+        }
+
+        .server-item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .server-flag-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 36, 66, 0.12);
+            border: 1px solid rgba(255, 36, 66, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--crimson-light);
+        }
+        .server-name-label {
+            font-family: var(--font-mono);
+            font-size: 13.5px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: #f3f4f6;
+        }
+        .server-region-sub {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .server-item-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .server-ping-badge {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: #34d399;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .server-connect-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #ff1a40 0%, #b8002e 100%);
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            box-shadow: 0 0 12px rgba(255, 26, 64, 0.4);
+            transition: all 0.2s ease;
+        }
+        .server-item-card:hover .server-connect-action {
+            box-shadow: 0 0 20px rgba(255, 26, 64, 0.8);
+            transform: scale(1.03);
+        }
+
+        .server-lock-placeholder {
+            text-align: center;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .lock-icon-radar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 36, 66, 0.1);
+            border: 1px solid rgba(255, 36, 66, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--crimson);
+            margin-bottom: 6px;
+        }
+
+        /* ========================================================
+           BOTTOM RESELLER CARD (Matches Screenshot)
+           ======================================================== */
+        .reseller-banner {
+            background: rgba(14, 10, 16, 0.92);
+            border: 1px solid rgba(255, 36, 66, 0.35);
+            border-radius: 18px;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        .reseller-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .reseller-lock-sq {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(22, 13, 20, 0.95);
+            border: 1px solid rgba(255, 36, 66, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--crimson-light);
+            flex-shrink: 0;
+        }
+        .reseller-text-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .reseller-small-tag {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            color: #9e8e97;
+            text-transform: uppercase;
+        }
+        .reseller-title-link {
+            font-family: var(--font-cyber);
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            color: var(--crimson);
+            text-transform: uppercase;
+        }
+
+        .buy-now-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(24, 12, 19, 0.95);
+            border: 1px solid rgba(255, 36, 66, 0.45);
+            border-radius: 12px;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .buy-now-btn:hover {
+            border-color: var(--crimson);
+            background: rgba(255, 36, 66, 0.22);
+            box-shadow: 0 0 20px rgba(255, 36, 66, 0.45);
+            transform: translateY(-1px);
+        }
+        .buy-now-btn svg {
+            color: var(--crimson-light);
+        }
+
+        /* ========================================================
+           FOOTER SECTION (Matches Mountains & DA Emblem in Screenshot)
+           ======================================================== */
+        .footer-section {
+            position: relative;
+            margin-top: 10px;
+            padding: 50px 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 20px;
+            overflow: hidden;
+            background-image: 
+                linear-gradient(180deg, var(--bg) 0%, transparent 40%, rgba(7, 7, 10, 0.85) 90%),
+                url('assets/defina-aura-mountains.jpg');
+            background-size: cover;
+            background-position: center bottom;
+            min-height: 180px;
+        }
+
+        .footer-logo-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Stylized Geometric DA Emblem */
+        .da-emblem-svg {
+            width: 58px;
+            height: 38px;
+            filter: drop-shadow(0 0 16px rgba(255, 36, 66, 0.7));
+        }
+
+        .footer-brand-title {
+            font-family: var(--font-cyber);
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 0.26em;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        .footer-brand-title span {
+            color: var(--crimson);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 720px) {
+            .header-banner {
+                padding: 18px;
+                min-height: auto;
+            }
+            .header-left {
+                max-width: 65%;
+            }
+            .dragon-art {
+                width: 130px;
+                height: 130px;
+                right: 70px;
+            }
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .priority-block {
+                font-size: 9px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .shell {
+                width: calc(100% - 16px);
+                padding: 12px 0 30px;
+            }
+            .header-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .header-left {
+                max-width: 100%;
+            }
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .dragon-art {
+                position: static;
+                transform: none;
+                width: 100px;
+                height: 100px;
+            }
+            .priority-block {
+                margin-left: 0;
+            }
+            .specs-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .specs-grid .spec-item:last-child {
+                grid-column: span 2;
+            }
+            .reseller-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+            .buy-now-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<main class="shell">
+
+
+    <!-- ========================================================
+         TOP HEADER BANNER (ANISH CREXXX + DRAGON + WHATSAPP)
+         ======================================================== -->
+    <header class="header-banner">
+        <div class="header-left">
+            <div class="welcome-tag">WELCOME <span>TO</span></div>
+            <h1 class="brand-hero-title">ANISH <span class="aura-text">CREXXX</span></h1>
+            <div class="hero-tags">
+                FAST <span>/</span> SECURE <span>/</span> STABLE
+            </div>
+            <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="whatsapp-pill" title="Contact WhatsApp Support">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                <span>WHATSAPP</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+        </div>
+
+        <div class="header-right">
+            <img src="assets/defina-aura-dragon.jpg" alt="Anish Crexxx Guardian Dragon" class="dragon-art" onerror="this.style.display='none'">
+            <div class="priority-block">
+                <div>YOUR</div>
+                <div>SECURITY</div>
+                <div>OUR</div>
+                <div>PRIORITY</div>
+                <div class="priority-underline"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================
+         TAB NAVIGATION: ACCESS KEY & SELECT SERVER
+         ======================================================== -->
+    <nav class="tab-nav" aria-label="Dashboard Navigation">
+        <button type="button" id="tab-btn-access" class="tab-btn active" onclick="switchDashboardTab('access')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2l-2 2m-1-1l-3 3m2 2l-3 3m2 2l-6 6a5 5 0 1 1-7-7l6-6 11 11z"></path></svg>
+            <span>ACCESS KEY</span>
+            <span id="tab-access-badge" class="tab-pill-badge">AUTH</span>
+        </button>
+        <button type="button" id="tab-btn-servers" class="tab-btn" onclick="switchDashboardTab('servers')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+            <span>SELECT SERVER</span>
+            <span id="tab-server-badge" class="tab-pill-badge">LOCKED</span>
+        </button>
+    </nav>
+
+    <!-- ========================================================
+         TAB 1: ACCESS KEY & SYSTEM STATUS (Matches UI Layout)
+         ======================================================== -->
+    <section id="tab-content-access" class="tab-content active">
+        <div class="main-grid">
+
+            <!-- Left: Access Key Card -->
+            <div class="access-card">
+                <div class="access-card-header">
+                    <div class="access-card-title">
+                        <span class="key-title-icon">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2l-2 2m-1-1l-3 3m2 2l-3 3m2 2l-6 6a5 5 0 1 1-7-7l6-6 11 11z"></path></svg>
+                        </span>
+                        <span>ACCESS KEY</span>
+                    </div>
+                    <div id="autosave-badge" class="autosave-pill">
+                        <span class="dot-green"></span>
+                        <span id="autosave-text">AUTO-SAVED</span>
+                    </div>
+                </div>
+
+                <div id="status-msg" class="status-box"></div>
+
+                <!-- Expired Date / Active License Card (Appears after login) -->
+                <div id="expiry-highlight-box" class="expiry-details-card">
+                    <div class="expiry-header-row">
+                        <span class="expiry-title-tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            <span>LICENSE ACTIVE // VERIFIED</span>
+                        </span>
+                        <span id="expiry-badge-pill" class="tab-pill-badge active-green">VALID</span>
+                    </div>
+                    <div class="expiry-date-display" id="expiry-full-date">EXPIRES: Loading...</div>
+                    <div class="expiry-time-left" id="expiry-countdown">CALCULATING REMAINING TIME...</div>
+                    <button type="button" class="switch-to-servers-btn" onclick="switchDashboardTab('servers')">
+                        <span>PROCEED TO SELECT SERVER</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+
+                <form id="auth-form" autocomplete="off">
+                    <!-- Key Input Box -->
+                    <div class="key-input-container">
+                        <input type="text" id="license-input" class="key-input-field" placeholder="Enter your license access code..." required autocomplete="off" autocapitalize="characters" spellcheck="false">
+                        <button type="button" id="eye-toggle-btn" class="eye-toggle-btn" onclick="toggleKeyMask()" title="Show/Hide access code">
+                            <svg id="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+
+                    <!-- Row with Key Count, Clear, and Paste Buttons -->
+                    <div class="input-actions-row">
+                        <div class="key-count-pill" id="key-count-tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2l-2 2m-1-1l-3 3m2 2l-3 3m2 2l-6 6a5 5 0 1 1-7-7l6-6 11 11z"></path></svg>
+                            <span>× 1</span>
+                        </div>
+
+                        <div class="action-buttons-group">
+                            <button type="button" id="clear-btn" class="card-btn-action" onclick="clearKey()" title="Clear saved license">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                <span>CLEAR</span>
+                            </button>
+                            <button type="button" class="card-btn-action" onclick="pasteKey()" title="Paste from clipboard">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                <span>PASTE</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cloudflare Turnstile Human Verification -->
+                                        <div class="turnstile-box-wrap">
+                        <div class="turnstile-badge-title">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span>CLOUDFLARE TURNSTILE // BOT DEFENSE</span>
+                        </div>
+                        <div id="cf-turnstile-widget" class="cf-turnstile" data-sitekey="0x4AAAAAAFk89ZSa6w3tFv6-" data-theme="dark" data-callback="onTurnstileAutoVerify"></div>
+                    </div>
+                    
+                    <!-- Big CTA Button -->
+                    <button type="submit" id="auth-submit-btn" class="auth-cta-btn">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        <span>AUTHENTICATE KEY</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </form>
+
+                <!-- 3 Specs Badges -->
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-label">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span>SECURITY</span>
+                        </div>
+                        <div class="spec-value">
+                            <span class="spec-val-dot green"></span>
+                            <span>TLS 1.3</span>
+                        </div>
+                    </div>
+
+                    <div class="spec-item">
+                        <div class="spec-label">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <span>HWID BIND</span>
+                        </div>
+                        <div class="spec-value">
+                            <span class="spec-val-dot green"></span>
+                            <span>LOCKED</span>
+                        </div>
+                    </div>
+
+                    <div class="spec-item">
+                        <div class="spec-label">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                            <span>EXPIRY</span>
+                        </div>
+                        <div class="spec-value" id="spec-expiry-val">
+                            <span class="spec-val-dot amber" id="spec-expiry-dot"></span>
+                            <span id="spec-expiry-text">ON-CONNECT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: System Status Card (Matches Screenshot) -->
+            <div class="system-status-card">
+                <!-- Concentric Glowing Radar Emblem -->
+                <div class="shield-radar-wrap">
+                    <div class="radar-ring ring-1"></div>
+                    <div class="radar-ring ring-2"></div>
+                    <div class="radar-ring ring-3">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff2442" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10" stroke="#ffffff" stroke-width="2.5"></polyline></svg>
+                    </div>
+                </div>
+
+                <div class="status-header-title">SYSTEM STATUS</div>
+                <div class="ready-pill" id="system-ready-pill">
+                    <span class="dot-green"></span>
+                    <span id="system-status-state">READY</span>
+                </div>
+
+                <!-- 4 Checklist Items -->
+                <div class="status-checklist">
+                    <div class="checklist-item">
+                        <div class="check-left">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>License Check</span>
+                        </div>
+                        <span class="check-badge-ok">OK</span>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="check-left">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Server Connection</span>
+                        </div>
+                        <span class="check-badge-ok">OK</span>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="check-left">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Key Verification</span>
+                        </div>
+                        <span class="check-badge-ok">OK</span>
+                    </div>
+
+                    <div class="checklist-item">
+                        <div class="check-left">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <span>Client Status</span>
+                        </div>
+                        <span class="check-badge-ok">OK</span>
+                    </div>
+                </div>
+
+                <!-- Animated ECG / Heartbeat Wave Graph -->
+                <div class="pulse-wave-box">
+                    <svg class="pulse-svg" viewBox="0 0 200 40">
+                        <path class="pulse-path" d="M 0 20 L 40 20 L 50 10 L 60 30 L 70 8 L 80 32 L 90 20 L 120 20 L 130 14 L 140 28 L 150 20 L 200 20"></path>
+                    </svg>
+                </div>
+
+                <div class="system-brand-tag">ANISH CREXXX</div>
+                <div class="system-active-sub" id="system-status-indicator">ACTIVE</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 2: SELECT SERVER PANEL (Opens on Another Tab After Login)
+         ======================================================== -->
+    <section id="tab-content-servers" class="tab-content">
+        <div class="servers-view-container">
+            <div class="servers-header-bar">
+                <div class="servers-header-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)" stroke-width="2.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    <span>SELECT PRIVATE SERVER (HAPP)</span>
+                </div>
+                <div class="tab-pill-badge active-green" id="server-count-badge">12 READY</div>
+            </div>
+
+            <!-- Active License & Expired Date Bar -->
+            <div class="server-tab-license-banner" id="server-license-banner">
+                <div class="banner-license-info">
+                    <div class="banner-license-key" id="banner-active-key">LICENSE: NOT AUTHENTICATED</div>
+                    <div class="banner-license-expiry" id="banner-active-expiry">EXPIRED DATE: PLEASE AUTHENTICATE KEY FIRST</div>
+                </div>
+                <button type="button" class="card-btn-action" onclick="switchDashboardTab('access')">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2l-2 2m-1-1l-3 3m2 2l-3 3m2 2l-6 6a5 5 0 1 1-7-7l6-6 11 11z"></path></svg>
+                    <span>MANAGE KEY</span>
+                </button>
+            </div>
+
+            <div id="server-status-msg" class="status-box"></div>
+
+            <!-- Server Category Filter Switcher: Separate Colider HS vs Drag HS -->
+            <div class="server-category-switcher" id="server-category-bar" style="display: none;">
+                <button type="button" class="server-cat-pill active" data-filter="colider_hs" onclick="filterServerCategory('colider_hs')">
+                    <span>🎯 COLIDER HS</span>
+                    <span class="cat-pill-count" id="cat-count-colider">7</span>
+                </button>
+                <button type="button" class="server-cat-pill" data-filter="drag_hs" onclick="filterServerCategory('drag_hs')">
+                    <span>⚡ DRAG HS SERVER</span>
+                    <span class="cat-pill-count" id="cat-count-drag">5</span>
+                </button>
+            </div>
+
+            <!-- Dynamic Server List -->
+            <div id="servers-list-container" class="servers-grid-list">
+                <!-- Fallback locked message until key is verified -->
+                <div class="server-lock-placeholder" id="servers-locked-view">
+                    <div class="lock-icon-radar">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
+                    <div style="font-family: var(--font-cyber); font-size: 16px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;">SERVERS LOCKED</div>
+                    <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); max-width: 320px; line-height: 1.5;">Authenticate your ANISH CREXXX access key to unlock high-speed private encrypted server nodes.</div>
+                    <button type="button" class="card-btn-action" style="margin-top: 8px;" onclick="switchDashboardTab('access')">
+                        <span>GO TO ACCESS KEY TAB</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================
+         BOTTOM RESELLER BANNER (Matches Screenshot)
+         ======================================================== -->
+    <aside class="reseller-banner">
+        <div class="reseller-left">
+            <div class="reseller-lock-sq">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <div class="reseller-text-wrap">
+                <div class="reseller-small-tag">NO KEY? GET ACCESS FROM</div>
+                <a href="https://t.me/anishcrexxx" target="_blank" rel="noopener noreferrer" class="reseller-title-link">OFFICIAL RESELLER</a>
+            </div>
+        </div>
+        <a href="https://t.me/anishcrexxx" target="_blank" rel="noopener noreferrer" class="buy-now-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>BUY NOW</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+    </aside>
+
+    <!-- ========================================================
+         FOOTER: MOUNTAINS & DA GEOMETRIC LOGO EMBLEM
+         ======================================================== -->
+    <footer class="footer-section">
+        <div class="footer-logo-wrap">
+            <!-- Stylized Geometric DA SVG Logo -->
+            <svg class="da-emblem-svg" viewBox="0 0 120 70" fill="none">
+                <!-- D letter polygons -->
+                <polygon points="15,10 48,10 58,25 58,45 48,60 15,60 15,50 42,50 48,42 48,28 42,20 15,20" fill="url(#gradD)"></polygon>
+                <!-- A letter polygons -->
+                <polygon points="68,60 84,10 96,10 112,60 98,60 94,46 82,46 78,60" fill="url(#gradA)"></polygon>
+                <polygon points="85,36 91,36 88,24" fill="#0c080d"></polygon>
+                <defs>
+                    <linearGradient id="gradD" x1="15" y1="10" x2="58" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#ff1a40"/>
+                        <stop offset="1" stop-color="#ff3355"/>
+                    </linearGradient>
+                    <linearGradient id="gradA" x1="68" y1="10" x2="112" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#38bdf8"/>
+                        <stop offset="0.5" stop-color="#f43f5e"/>
+                        <stop offset="1" stop-color="#ff1a40"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="footer-brand-title">ANISH <span>CREXXX</span></div>
+        </div>
+    </footer>
+
+</main>
+
+<script>
+(() => {
+    const input = document.getElementById('license-input');
+    const form = document.getElementById('auth-form');
+    const btn = document.getElementById('auth-submit-btn');
+    const statusBox = document.getElementById('status-msg');
+    const serverStatusBox = document.getElementById('server-status-msg');
+    const clearBtn = document.getElementById('clear-btn');
+    const autosaveBadge = document.getElementById('autosave-badge');
+    const eyeToggleBtn = document.getElementById('eye-toggle-btn');
+    const eyeIcon = document.getElementById('eye-icon');
+    
+    // Spec & Expiry Elements
+    const specExpiryText = document.getElementById('spec-expiry-text');
+    const specExpiryDot = document.getElementById('spec-expiry-dot');
+    const expiryHighlightBox = document.getElementById('expiry-highlight-box');
+    const expiryFullDate = document.getElementById('expiry-full-date');
+    const expiryCountdown = document.getElementById('expiry-countdown');
+    
+    // Server Tab Elements
+    const tabBtnAccess = document.getElementById('tab-btn-access');
+    const tabBtnServers = document.getElementById('tab-btn-servers');
+    const tabContentAccess = document.getElementById('tab-content-access');
+    const tabContentServers = document.getElementById('tab-content-servers');
+    const tabServerBadge = document.getElementById('tab-server-badge');
+    const bannerActiveKey = document.getElementById('banner-active-key');
+    const bannerActiveExpiry = document.getElementById('banner-active-expiry');
+    const serversListContainer = document.getElementById('servers-list-container');
+    const serverCountBadge = document.getElementById('server-count-badge');
+
+    const STORAGE_KEY = 'defina_aura_license_key';
+    const legacyKeys = ['pyron_license_key', 'define_aura_license_key', 'locmod_license_key', 'extremex_license_key', 'happ_license_key', 'kurama_license_key'];
+    const deviceKey = 'happ_device_id';
+    const deviceId = localStorage.getItem(deviceKey) || crypto.randomUUID();
+    localStorage.setItem(deviceKey, deviceId);
+
+    let isKeyMasked = false;
+    let cachedServers = [];
+    let authenticatedLicense = '';
+    let currentExpiresAt = null;
+    let currentExpiresTimestamp = null;
+
+    // Switch between Access Key tab and Select Server tab
+    window.switchDashboardTab = (tabName) => {
+        if (tabName === 'servers') {
+            tabBtnAccess.classList.remove('active');
+            tabBtnServers.classList.add('active');
+            tabContentAccess.classList.remove('active');
+            tabContentServers.classList.add('active');
+        } else {
+            tabBtnServers.classList.remove('active');
+            tabBtnAccess.classList.add('active');
+            tabContentServers.classList.remove('active');
+            tabContentAccess.classList.add('active');
+        }
+    };
+
+    // Toggle Masking / Unmasking of access key in input
+    window.toggleKeyMask = () => {
+        isKeyMasked = !isKeyMasked;
+        input.type = isKeyMasked ? 'password' : 'text';
+        if (isKeyMasked) {
+            eyeIcon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
+            eyeToggleBtn.style.color = '#ff2442';
+        } else {
+            eyeIcon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+            eyeToggleBtn.style.color = '#7b6571';
+        }
+    };
+
+    // Formatter for Expiration Date & Remaining Days
+    function formatExpiryDetails(expiresAt, expiresTimestamp) {
+        if (!expiresAt && !expiresTimestamp) {
+            return {
+                short: 'ON-CONNECT',
+                full: 'EXPIRES: ON-CONNECT',
+                countdown: 'WILL ACTIVATE UPON FIRST CONNECTION',
+                badgeText: 'PENDING',
+                isLifetime: false
+            };
+        }
+
+        const strExpires = String(expiresAt || '').trim();
+        if (strExpires.toLowerCase().includes('lifetime') || strExpires.toLowerCase().includes('never')) {
+            return {
+                short: 'LIFETIME',
+                full: 'EXPIRES: NEVER (LIFETIME ACCESS)',
+                countdown: 'PERMANENT UNRESTRICTED LICENSE',
+                badgeText: 'LIFETIME',
+                isLifetime: true
+            };
+        }
+
+        let dateObj = null;
+        if (expiresTimestamp && Number(expiresTimestamp) > 0) {
+            dateObj = new Date(Number(expiresTimestamp) * 1000);
+        } else if (expiresAt) {
+            dateObj = new Date(expiresAt);
+        }
+
+        if (!dateObj || isNaN(dateObj.getTime())) {
+            return {
+                short: strExpires || 'ACTIVE',
+                full: 'EXPIRES: ' + (strExpires || 'ACTIVE'),
+                countdown: 'STATUS: ACTIVE LICENSE',
+                badgeText: 'ACTIVE',
+                isLifetime: false
+            };
+        }
+
+        const dateFormatted = dateObj.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+
+        const diffMs = dateObj.getTime() - Date.now();
+        if (diffMs > 0) {
+            const totalHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const days = Math.floor(totalHours / 24);
+            const hours = totalHours % 24;
+            const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+            
+            let countdownText = '';
+            let shortText = '';
+            let badgeText = '';
+
+            if (days > 0) {
+                countdownText = `${days} DAYS ${hours} HOURS REMAINING`;
+                shortText = `${days}d left`;
+                badgeText = `${days}d LEFT`;
+            } else if (totalHours > 0) {
+                countdownText = `${totalHours} HOURS ${minutes} MINS REMAINING`;
+                shortText = `${totalHours}h ${minutes}m left`;
+                badgeText = `${totalHours}h LEFT`;
+            } else {
+                countdownText = `${Math.max(1, minutes)} MINUTES REMAINING`;
+                shortText = `${Math.max(1, minutes)}m left`;
+                badgeText = `${Math.max(1, minutes)}m LEFT`;
+            }
+
+            return {
+                short: shortText,
+                full: `EXPIRES: ${dateFormatted}`,
+                countdown: countdownText,
+                badgeText: badgeText,
+                isLifetime: false
+            };
+        } else {
+            return {
+                short: 'EXPIRED',
+                full: `EXPIRED ON: ${dateFormatted}`,
+                countdown: 'LICENSE HAS EXPIRED - PLEASE RENEW',
+                badgeText: 'EXPIRED',
+                isLifetime: false,
+                isExpired: true
+            };
+        }
+    }
+
+    // Update UI with expiration details
+    function displayExpiry(expiresAt, expiresTimestamp) {
+        currentExpiresAt = expiresAt;
+        currentExpiresTimestamp = expiresTimestamp;
+
+        const info = formatExpiryDetails(expiresAt, expiresTimestamp);
+
+        // Update 3-badge specs grid
+        if (specExpiryText) specExpiryText.textContent = info.short;
+        if (specExpiryDot) {
+            specExpiryDot.className = info.isExpired ? 'spec-val-dot amber' : 'spec-val-dot green';
+        }
+
+        // Update Post-login prominent highlight card
+        if (expiryHighlightBox) {
+            expiryHighlightBox.classList.add('show');
+            if (expiryFullDate) expiryFullDate.textContent = info.full;
+            if (expiryCountdown) {
+                expiryCountdown.textContent = info.countdown;
+                expiryCountdown.style.color = info.isExpired ? '#fca5a5' : '#a7f3d0';
+            }
+        }
+
+        // Update Server Tab License Bar
+        if (bannerActiveExpiry) {
+            bannerActiveExpiry.textContent = `${info.full} • ${info.countdown}`;
+        }
+        if (tabServerBadge) {
+            tabServerBadge.textContent = 'READY';
+            tabServerBadge.classList.add('active-green');
+        }
+    }
+
+    function updateStorageAndUI(val) {
+        const trimmed = (val || '').trim().toUpperCase();
+        if (trimmed) {
+            try {
+                localStorage.setItem(STORAGE_KEY, trimmed);
+                legacyKeys.forEach(k => localStorage.setItem(k, trimmed));
+            } catch (e) {}
+            if (autosaveBadge) autosaveBadge.style.display = 'inline-flex';
+        } else {
+            try {
+                localStorage.removeItem(STORAGE_KEY);
+                legacyKeys.forEach(k => localStorage.removeItem(k));
+            } catch (e) {}
+        }
+    }
+
+    input.addEventListener('input', () => {
+        updateStorageAndUI(input.value);
+    });
+
+    window.clearKey = () => {
+        input.value = '';
+        updateStorageAndUI('');
+        authenticatedLicense = '';
+        statusBox.className = 'status-box';
+        expiryHighlightBox.className = 'expiry-details-card';
+        if (specExpiryText) specExpiryText.textContent = 'ON-CONNECT';
+        if (specExpiryDot) specExpiryDot.className = 'spec-val-dot amber';
+        if (tabServerBadge) {
+            tabServerBadge.textContent = 'LOCKED';
+            tabServerBadge.classList.remove('active-green');
+        }
+        if (bannerActiveKey) bannerActiveKey.textContent = 'LICENSE: NOT AUTHENTICATED';
+        if (bannerActiveExpiry) bannerActiveExpiry.textContent = 'EXPIRED DATE: PLEASE AUTHENTICATE KEY FIRST';
+        btn.disabled = false;
+        btn.innerHTML = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg><span>AUTHENTICATE KEY</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+        renderLockedServers();
+        input.focus();
+    };
+
+    window.pasteKey = async () => {
+        try {
+            const clip = await navigator.clipboard.readText();
+            if (clip) {
+                input.value = clip.trim().toUpperCase();
+                updateStorageAndUI(input.value);
+                input.focus();
+            }
+        } catch (e) {
+            input.focus();
+        }
+    };
+
+    function showStatus(text, type = 'error') {
+        statusBox.textContent = text;
+        statusBox.className = `status-box show ${type}`;
+    }
+
+    function showServerStatus(text, type = 'error') {
+        serverStatusBox.textContent = text;
+        serverStatusBox.className = `status-box show ${type}`;
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const key = input.value.trim().toUpperCase();
+        if (!key) return;
+
+        updateStorageAndUI(key);
+
+        btn.disabled = true;
+        btn.innerHTML = '<span>AUTHENTICATING KEY…</span>';
+        statusBox.className = 'status-box';
+
+        try {
+            const turnstileToken = (form.querySelector('[name="cf-turnstile-response"]') && form.querySelector('[name="cf-turnstile-response"]').value) 
+                || (window.turnstile && typeof window.turnstile.getResponse === 'function' ? window.turnstile.getResponse() : '');
+
+            const res = await fetch('api/servers.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    license_key: key, 
+                    device_id: deviceId,
+                    turnstile_token: turnstileToken
+                })
+            });
+            const text = await res.text();
+            let data;
+            try { 
+                data = JSON.parse(text); 
+            } catch (err) { 
+                if (text.includes('502') || text.includes('Bad gateway') || res.status === 502) {
+                    throw Error('Server gateway error (502). The server configuration or upstream service is temporarily unreachable.');
+                }
+                const clean = text.replace(/<[^>]+>/g, '').trim();
+                throw Error(clean.length > 150 ? clean.substring(0, 150) + '…' : clean || 'Invalid server response'); 
+            }
+
+            if (!res.ok || data.status !== 'success') {
+                throw Error(data.message || 'Access verification failed');
+            }
+
+            authenticatedLicense = key;
+            cachedServers = data.servers || [];
+
+            // Display active key on Server Tab
+            if (bannerActiveKey) bannerActiveKey.textContent = `AUTHENTICATED: ${key}`;
+
+            // Prominently show expired date in UI
+            displayExpiry(data.expires_at, data.expires_timestamp);
+
+            showStatus('License authenticated successfully! Switching to private servers…', 'ok');
+            btn.innerHTML = '<span>AUTHENTICATED ✓</span>';
+
+            // Render unlocked servers
+            renderServers(cachedServers);
+            if (tabServerBadge) {
+                tabServerBadge.textContent = `${cachedServers.length} READY`;
+                tabServerBadge.classList.add('active-green');
+            }
+
+            // AUTO-SWITCH TO ANOTHER TAB (Select Server Tab) AFTER LOGIN!
+            setTimeout(() => {
+                switchDashboardTab('servers');
+            }, 600);
+
+        } catch (error) {
+            if (window.turnstile && typeof window.turnstile.reset === 'function') {
+                try { window.turnstile.reset(); } catch (e) {}
+            }
+            showStatus(error.message || 'Unable to connect to verification server', 'error');
+            btn.disabled = false;
+            btn.innerHTML = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg><span>AUTHENTICATE KEY</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+        }
+    });
+
+    const regionFlags = {
+        'bd': 'BD',
+        'sg': 'SG',
+        'ind': 'IN',
+        'eu': 'EU',
+        'br': 'BR'
+    };
+
+    const simulatedPings = {
+        'bd': '24ms',
+        'sg': '38ms',
+        'ind': '28ms',
+        'eu': '96ms',
+        'br': '145ms'
+    };
+
+    let activeServerFilter = 'colider_hs';
+
+    window.filterServerCategory = function(cat) {
+        activeServerFilter = (cat === 'drag_hs') ? 'drag_hs' : 'colider_hs';
+        document.querySelectorAll('.server-cat-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-filter') === activeServerFilter);
+        });
+        if (cachedServers && cachedServers.length > 0) {
+            renderServers(cachedServers);
+        }
+    };
+
+    // Attach click listeners to category buttons
+    document.querySelectorAll('.server-cat-pill').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const cat = this.getAttribute('data-filter');
+            window.filterServerCategory(cat);
+        });
+    });
+
+    function createServerCardElement(srv) {
+        const flagCode = srv.flag || regionFlags[srv.id] || (srv.id && srv.id.length <= 4 ? srv.id.toUpperCase() : (srv.name || 'SRV').substring(0, 3).toUpperCase());
+        const pingVal = srv.ping || simulatedPings[srv.id] || '32ms';
+        const isColider = (srv.category === 'colider_hs')
+            || (srv.name && srv.name.toLowerCase().includes('colider'))
+            || (srv.id && srv.id.startsWith('colider_'));
+        const regionDesc = srv.region ? `${srv.region.toUpperCase()} • PROTOCOL HAPP CRYPT5` : 'DEDICATED VIP NODE • PROTOCOL HAPP CRYPT5';
+
+        const card = document.createElement('div');
+        card.className = 'server-item-card';
+        card.innerHTML = `
+            <div class="server-item-left">
+                <div class="server-flag-icon">${flagCode}</div>
+                <div>
+                    <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                        <div class="server-name-label">${srv.name}</div>
+                        <span class="server-tag-badge ${isColider ? 'server-tag-colider' : 'server-tag-drag'}">
+                            ${isColider ? '🎯 COLIDER HS' : '⚡ DRAG HS'}
+                        </span>
+                    </div>
+                    <div class="server-region-sub">${regionDesc}</div>
+                </div>
+            </div>
+            <div class="server-item-right">
+                <div class="server-ping-badge">
+                    <span class="dot-green"></span>
+                    <span>${pingVal}</span>
+                </div>
+                <button type="button" class="server-connect-action">
+                    <span>CONNECT</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+        `;
+
+        card.addEventListener('click', async () => {
+            serversListContainer.querySelectorAll('.server-item-card').forEach(el => el.style.pointerEvents = 'none');
+            showServerStatus(`Initiating secure connection to ${srv.name}…`, 'ok');
+
+            try {
+                const cRes = await fetch('api/connect.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ server: srv.id })
+                });
+                const cText = await cRes.text();
+                let cData;
+                try { 
+                    cData = JSON.parse(cText); 
+                } catch (e) { 
+                    if (cText.includes('502') || cText.includes('Bad gateway') || cRes.status === 502) {
+                        throw Error('Connection gateway error (502). Please check server node status.');
+                    }
+                    const clean = cText.replace(/<[^>]+>/g, '').trim();
+                    throw Error(clean.length > 150 ? clean.substring(0, 150) + '…' : clean || 'Connection failed'); 
+                }
+
+                if (!cRes.ok || cData.status !== 'success') {
+                    throw Error(cData.message || 'Server connection failed');
+                }
+
+                if (!/^happ:\/\/crypt5\//.test(cData.encrypted_link)) {
+                    throw Error('Secure Happ protocol link could not be generated');
+                }
+
+                showServerStatus(`Connected to ${srv.name}! Launching secure profile in Happ…`, 'ok');
+
+                // Open link (both window.open and fallback location assignment)
+                try {
+                    const newTab = window.open(cData.encrypted_link, '_blank');
+                    if (!newTab || newTab.closed || typeof newTab.closed === 'undefined') {
+                        window.location.assign(cData.encrypted_link);
+                    }
+                } catch (e) {
+                    window.location.assign(cData.encrypted_link);
+                }
+            } catch (err) {
+                showServerStatus(err.message || 'Failed to connect server', 'error');
+            } finally {
+                serversListContainer.querySelectorAll('.server-item-card').forEach(el => el.style.pointerEvents = 'auto');
+            }
+        });
+
+        return card;
+    }
+
+    function renderServers(servers) {
+        serversListContainer.innerHTML = '';
+        const categoryBar = document.getElementById('server-category-bar');
+        if (categoryBar) categoryBar.style.display = 'flex';
+
+        const coliderList = [];
+        const dragList = [];
+
+        servers.forEach(rawSrv => {
+            const s = { ...rawSrv };
+            const id = (s.id || '').toLowerCase();
+            const name = (s.name || '').toLowerCase();
+            const cat = (s.category || '').toLowerCase();
+
+            const isColider = (cat === 'colider_hs')
+                || id.startsWith('colider_')
+                || id.startsWith('define_aura_')
+                || name.includes('colider')
+                || name.includes('collider')
+                || name.includes('define aura');
+
+            if (isColider) {
+                if (!s.name || s.name.startsWith('Define Aura')) {
+                    const m = s.name.match(/#(\d+)/);
+                    s.name = 'Colider HS #' + (m ? m[1] : '1');
+                }
+                s.category = 'colider_hs';
+                coliderList.push(s);
+            } else {
+                if (!s.name || s.name.startsWith('Define —') || s.name.startsWith('Define -')) {
+                    s.name = s.name.replace(/^Define\s*[-—]\s*/i, 'Drag HS Server — ');
+                }
+                s.category = 'drag_hs';
+                dragList.push(s);
+            }
+        });
+
+        const countColider = document.getElementById('cat-count-colider');
+        const countDrag = document.getElementById('cat-count-drag');
+        if (countColider) countColider.textContent = coliderList.length;
+        if (countDrag) countDrag.textContent = dragList.length;
+
+        // Ensure active filter is strictly either colider_hs or drag_hs (never show all together)
+        if (activeServerFilter !== 'drag_hs') {
+            activeServerFilter = 'colider_hs';
+        }
+
+        // Highlight matching button
+        document.querySelectorAll('.server-cat-pill').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-filter') === activeServerFilter);
+        });
+
+        if (activeServerFilter === 'drag_hs') {
+            if (serverCountBadge) serverCountBadge.textContent = `${dragList.length} DRAG HS`;
+            const secHdr = document.createElement('div');
+            secHdr.className = 'server-section-header drag-section';
+            secHdr.innerHTML = `
+                <div class="section-header-left">
+                    <span class="section-header-title">⚡ DRAG HS SERVERS</span>
+                    <span class="section-header-badge">${dragList.length} GLOBAL</span>
+                </div>
+                <div class="section-header-desc">High-speed drag trajectory routing nodes</div>
+            `;
+            serversListContainer.appendChild(secHdr);
+            dragList.forEach(srv => serversListContainer.appendChild(createServerCardElement(srv)));
+        } else {
+            if (serverCountBadge) serverCountBadge.textContent = `${coliderList.length} COLIDER HS`;
+            const secHdr = document.createElement('div');
+            secHdr.className = 'server-section-header';
+            secHdr.innerHTML = `
+                <div class="section-header-left">
+                    <span class="section-header-title">🎯 COLIDER HS PRIVATE NODES</span>
+                    <span class="section-header-badge">${coliderList.length} DEDICATED</span>
+                </div>
+                <div class="section-header-desc">Ultra-low latency hitbox registration nodes</div>
+            `;
+            serversListContainer.appendChild(secHdr);
+            coliderList.forEach(srv => serversListContainer.appendChild(createServerCardElement(srv)));
+        }
+    }
+
+    function renderLockedServers() {
+        const categoryBar = document.getElementById('server-category-bar');
+        if (categoryBar) categoryBar.style.display = 'none';
+
+        serversListContainer.innerHTML = `
+            <div class="server-lock-placeholder">
+                <div class="lock-icon-radar">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <div style="font-family: var(--font-cyber); font-size: 16px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;">SERVERS LOCKED</div>
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); max-width: 320px; line-height: 1.5;">Authenticate your ANISH CREXXX access key to unlock high-speed private encrypted server nodes.</div>
+                <button type="button" class="card-btn-action" style="margin-top: 8px;" onclick="switchDashboardTab('access')">
+                    <span>GO TO ACCESS KEY TAB</span>
+                </button>
+            </div>
+        `;
+    }
+
+    // Turnstile Auto-Verify Callback
+    window.onTurnstileAutoVerify = (token) => {
+        if (input.value.trim() && !btn.disabled && !authenticatedLicense) {
+            setTimeout(() => {
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit();
+                } else {
+                    form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }
+            }, 250);
+        }
+    };
+
+    // Auto-restore saved key on page load & auto-authenticate
+    try {
+        let savedKey = localStorage.getItem(STORAGE_KEY);
+        if (!savedKey) {
+            for (const k of legacyKeys) {
+                const candidate = localStorage.getItem(k);
+                if (candidate && candidate.trim()) {
+                    savedKey = candidate;
+                    break;
+                }
+            }
+        }
+
+        if (savedKey && savedKey.trim()) {
+            input.value = savedKey.trim().toUpperCase();
+            updateStorageAndUI(input.value);
+
+            // If Turnstile widget is not rendered on this page, auto-submit immediately
+            const hasTurnstile = !!document.getElementById('cf-turnstile-widget');
+            if (!hasTurnstile) {
+                setTimeout(() => {
+                    if (input.value.trim() && !btn.disabled) {
+                        if (typeof form.requestSubmit === 'function') {
+                            form.requestSubmit();
+                        } else {
+                            form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                        }
+                    }
+                }, 350);
+            }
+        }
+    } catch (e) {
+        console.warn('LocalStorage unavailable:', e);
+    }
+})();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"d842b35fab224950b265e5cfbdc33c4b","r":1,"spa":2}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a56a894b6e60cf60',t:'MTc5NDAzNTYxNg=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a56a894b6e60cf60',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
